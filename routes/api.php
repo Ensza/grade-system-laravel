@@ -29,6 +29,7 @@ Route::middleware(['auth:api', UserIsAdmin::class])->group(function(){
     Route::get('/grades/export/{subject_id}', [GradeController::class, 'exportSubject']);
     Route::get('/grades/export/pdf/{subject_id}', [GradeController::class, 'exportSubjectPDF']);
     Route::get('/export/ranking', [StudentController::class, 'rankingPDF']);
+    Route::get('/export/award', [StudentController::class, 'rankingAwardPDF']);
 
     Route::post('/grades/import/{subject_id}', [GradeController::class, 'importGrades']);
 

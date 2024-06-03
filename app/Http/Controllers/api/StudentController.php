@@ -14,6 +14,20 @@ use Illuminate\Support\Collection;
 
 class StudentController extends BaseController
 {
+    public function rankingAwardPDF(Request $request){
+        $rank = $request->rank;
+
+        $ranking = $this->getRankingByGWA($request);
+
+        if($rank < 1 || $rank > count($ranking)){
+            return response(['error'=>'outside range'], 404);
+        }
+
+        $pdf = Pdf::loadView('ranking-award-pdf', ['student'=>$ranking[$rank - 1], 'rank'=>$rank])
+            ->setPaper('a4', 'landscape');;
+        return $pdf->download('award.pdf');
+    }
+
     public function rankingPDF(Request $request){
         $data = ['students' => $this->getRankingByGWA($request)];
         $pdf = Pdf::loadView('ranking-pdf', $data);
